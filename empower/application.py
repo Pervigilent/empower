@@ -1,6 +1,8 @@
 from empower.gui.mainwindow import MainWindow
+from empower.ansys import AnsysParser
 import xml.etree.ElementTree as ET
 import os
+import re
 
 
 class Application:
@@ -36,7 +38,11 @@ class Application:
                 if ext == ".emp":
                     Project.tree.write(filename, encoding="utf-8", xml_declaration=True)
                 elif ext == ".aedt":
-                    AnsysParser.save(tree=Project.tree, filename=filename)
+                    with open(filename, "w") as f:
+                        tree = Project.get_tree()
+                        root_element = tree.getroot()
+                        root_node = AnsysParser.convert_xml(root_element)                        
+                        AnsysParser.write(node=root_node, file=f)
                 else:
                     messagebox.showerror("Unsupported file type", "Only supports .emp and .aedt")
             except Exception as e:
@@ -66,20 +72,5 @@ class Project:
     def parse(cls, projects, tree):
         pass
     
-#TODO: Model AnsysParser on tinyxml and separate into another module or folder/package
-class AnsysParser:
-    def __init__(self, filename):
-        pass
-        
-    @classmethod
-    def parse(cls, filename):
-        pass
-        
-    @classmethod
-    def convert(cls, tree):
-        pass
-        
-    @classmethod
-    def save(cls, filename, tree):
-        pass
+
 

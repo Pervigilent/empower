@@ -215,7 +215,7 @@ class MainWindow(tk.Tk):
 	def create_windows(self):
 		self.upper_frame = ttk.Frame(self) # Ribbon
 		self.middle_frame = ttk.Frame(self) # Windows (and Display)
-		self.lower_frame = ttk.Frame(self) # Status
+		self.lower_frame = Status(self) # Status
 		self.left_frame = ttk.Frame(self.middle_frame, width=MainWindow.LEFT_FRAME_WIDTH)
 		self.right_frame = ttk.Frame(self.middle_frame, width=MainWindow.RIGHT_FRAME_WIDTH)
 		self.upper_left_frame = ProjectManager(self.left_frame) # Project Manager - Treeview
