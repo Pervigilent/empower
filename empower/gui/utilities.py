@@ -38,11 +38,22 @@ class Display(ttk.Frame):
 class ProjectManager(ttk.Frame):
 	def __init__(self, parent, controller=None):
 		super().__init__(parent)
+		self.projects = None
 		self.frame = ttk.Labelframe(self, text="Project Manager")
 		self.tree = ttk.Treeview(self.frame)
 
 		self.tree.grid(row=0, column=0, sticky="nsew")
 		self.frame.grid(row=0, column=0, sticky="nsew")
+
+	def set_projects(self, value):
+		self.projects = value
+		self.update_projects()
+		
+	def update_projects(self):
+		if self.projects is not None:
+			self.root_item = self.tree.insert("", tk.END, self.projects.get_name())
+			for project in self.projects.projects:
+				self.tree.insert(self.root_item, tk.END, project.Name)
 
 
 class Properties(ttk.Frame):
@@ -83,7 +94,7 @@ class MessageManager(ttk.Frame):
 
 class ProgressViewer(ttk.Frame):
 	def __init__(self, parent, controller=None,
-	        height=200, width=400):
+			height=200, width=400):
 		super().__init__(parent)
 		
 		self.frame = ttk.Labelframe(self, text="Progress")
@@ -107,31 +118,31 @@ class ProgressViewer(ttk.Frame):
 		self.frame.grid(row=0, column=0)
 		
 	def _on_frame_configure(self, event):
-	    self.canvas.configure(scrollregion=self.canvas.bbox("all"))
-	    
+		self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+		
 	def _on_canvas_configure(self, event):
-	    self.canvas.itemconfig(self.window, width=event.width)
-	    
+		self.canvas.itemconfig(self.window, width=event.width)
+		
 	def add_item(self, text):
-	    item = Progress(self.inner_frame, text=text)
-	    item.pack(fill="x", padx=5, pady=3)
-	    self.items.append(item)
-	    
-	    return item
+		item = Progress(self.inner_frame, text=text)
+		item.pack(fill="x", padx=5, pady=3)
+		self.items.append(item)
+		
+		return item
 
 
 class Progress(ttk.Frame):
-    def __init__(self, parent, text="", maximum=100):
-        super().__init__(parent)
-        
-        self.label = ttk.Label(self, text=text, width=20, anchor="w")
-        self.bar = ttk.Progressbar(self, orient="horizontal", mode="determinate", maximum=maximum)
-        self.label.grid(row=0, column=0, padx=5, sticky="w")
-        self.progress.grid(row=0, column=1, padx=5, sticky="ew")
-        self.columnconfigure(1, weight=1)
-        
-    def set(self, value):
-        self.progress["value"] = value
+	def __init__(self, parent, text="", maximum=100):
+		super().__init__(parent)
+		
+		self.label = ttk.Label(self, text=text, width=20, anchor="w")
+		self.bar = ttk.Progressbar(self, orient="horizontal", mode="determinate", maximum=maximum)
+		self.label.grid(row=0, column=0, padx=5, sticky="w")
+		self.progress.grid(row=0, column=1, padx=5, sticky="ew")
+		self.columnconfigure(1, weight=1)
+		
+	def set(self, value):
+		self.progress["value"] = value
 
 
 class Status(ttk.Frame):
@@ -141,10 +152,10 @@ class Status(ttk.Frame):
 		self.label.pack(fill=tk.X)
 		
 	def set_status(self, format_string, *args):
-	    self.label.config(text=format_string % args)
-	    self.label.update_idletasks()
-	    
+		self.label.config(text=format_string % args)
+		self.label.update_idletasks()
+		
 	def clear_status(self):
-	    self.label.config(text="")
-	    self.label.update_idletasks()
+		self.label.config(text="")
+		self.label.update_idletasks()
 

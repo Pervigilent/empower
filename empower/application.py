@@ -50,14 +50,20 @@ class Application:
             
 
 class Project:
+    filename = None
+    name = None
     tree = None
     projects = []
-    def __init__(self, tree=None):
+    def __init__(self, tree=None, filename=None):
         if tree is not None:
             Project.parse(tree)
         else:
             #Project.tree = None
-            Project.projects.append(self)            
+            Project.projects.append(self)
+        
+        if filename is not None:
+            Project.filename = filename
+            
         
     @classmethod
     def create_tree(cls):
@@ -71,6 +77,12 @@ class Project:
     @classmethod
     def parse(cls, projects, tree):
         pass
+        
+    @classmethod
+    def get_name(cls):
+        if Project.filename is not None:
+            basename = os.path.basename(filename)
+            return os.path.splitext(basename)[0]
     
 
 
