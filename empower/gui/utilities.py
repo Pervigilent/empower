@@ -39,6 +39,9 @@ class ProjectManager(ttk.Frame):
 	def __init__(self, parent, controller=None):
 		super().__init__(parent)
 		self.projects = None
+		self.root_item = None
+		self.project_items = []
+
 		self.frame = ttk.Labelframe(self, text="Project Manager")
 		self.tree = ttk.Treeview(self.frame)
 
@@ -51,9 +54,15 @@ class ProjectManager(ttk.Frame):
 		
 	def update_projects(self):
 		if self.projects is not None:
+			self.project_items = []
+			for item in self.tree.get_children():
+				self.tree.delete(item)
+			root = self.projects.tree.getroot()
 			self.root_item = self.tree.insert("", tk.END, self.projects.get_name())
-			for project in self.projects.projects:
-				self.tree.insert(self.root_item, tk.END, project.Name)
+			for model in root.iter("HFSSModel"):
+				name = model.get("Name")
+				if name:
+					self.project_items.append(self.tree.insert(self.root_item, tk.END, text=name))
 
 
 class Properties(ttk.Frame):
