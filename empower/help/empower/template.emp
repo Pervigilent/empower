@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AnsoftProject
+  Created="Fri Aug 25 13:15:06 2023'
+  Product="ElectronicsDesktop"
+  FileOwnedByWorkbench="False"
+  
+  UsesAdvancedFeatures="False"
+  NextUniqueID="0"
+  MoveBackwards="False">
+<!--
+<EMPowerProject
+  Created="Fri Aug 25 13:15:06 2023'
+  Product="EMPower"
+  FileOwnedByWorkbench="False"
+  
+  UsesAdvancedFeatures="False"
+  NextUniqueID="0"
+  MoveBackwards="False">
+
+<AnsoftProject
+  Created="Fri Aug 25 13:15:06 2023'
+  Product="ElectronicsDesktop"
+  FileOwnedByWorkbench="false">
+  
+  UsesAdvancedFeatures="false"
+  NextUniqueID="0"
+  MoveBackwards="false"
+-->
+  <Desktop>
+    Version(2025, 2)
+    InfrastrutureVersion(1, 0)
+  </Desktop>
+  <Definitions>
+    <Materials>
+    </Materials>
+  </Definitions>
+  <HFSSModel
+    Name='test_design_1'>
+  </HFSSModel>
+   <HFSSModel
+    Name='test_design_2'>
+  </HFSSModel>
+  <DataInstances
+    DesignEditor='TopLevel'>
+    <Instance
+      DesignEditor='test_design_1'
+      ID="0">
+    </Instance>
+  </DataInstances>
+</AnsoftProject>
