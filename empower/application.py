@@ -47,7 +47,12 @@ class Application:
                     messagebox.showerror("Unsupported file type", "Only supports .emp and .aedt")
             except Exception as e:
                 messagebox.showerror("Could not save file", str(e))
-            
+
+
+class ProjectElement:
+    def __init__(self):
+        name = None # 'Name'
+
 
 class Project:
     filename = None
@@ -64,11 +69,44 @@ class Project:
         if filename is not None:
             Project.filename = filename
             
-        
+'''
+import xml.etree.ElementTree as ET
+
+# 1. Create the root element
+root = ET.Element('person_data')
+
+# 2. Add a child element 'person' to the root
+person = ET.SubElement(root, 'person', {'id': '1'}) # Added attribute 'id'
+
+# 3. Add child elements 'name' and 'age' to 'person'
+name = ET.SubElement(person, 'name')
+age = ET.SubElement(person, 'age')
+
+# 4. Set text content for the child elements
+name.text = 'John Doe'
+age.text = '30'
+
+# 5. Create the ElementTree instance with the root
+tree = ET.ElementTree(root)
+
+# 6. Write the tree to an XML file
+# Use xml_declaration=True and encoding='utf-8' for a well-formed XML file
+try:
+    tree.write('person.xml', encoding='utf-8', xml_declaration=True)
+except IOError as e:
+    print(f"Error writing file: {e}")
+
+# To print the XML to the console, you can use tostring()
+# import xml.etree.ElementTree as ET
+# print(ET.tostring(root, encoding='utf-8').decode('utf-8'))
+
+'''
     @classmethod
     def create_tree(cls):
-        pass    
-        
+        root = ET.Element('AnsoftProject')
+        for project in self.projects:
+            ET.SubElement(root, 'HFSSModel', {'Name' : project.name}
+
     @classmethod
     def get_tree(cls):
         Project.create_tree()
@@ -83,6 +121,4 @@ class Project:
         if Project.filename is not None:
             basename = os.path.basename(filename)
             return os.path.splitext(basename)[0]
-    
-
 
