@@ -50,8 +50,8 @@ class Application:
 
 
 class ProjectElement:
-    def __init__(self):
-        name = None # 'Name'
+    def __init__(self, element):
+        name = element.get("Name")
 
 
 class Project:
@@ -68,7 +68,32 @@ class Project:
         
         if filename is not None:
             Project.filename = filename
+
+    @classmethod
+    def create_tree(cls): # Create tree from projects?
+        root = ET.Element('AnsoftProject')
+        for project in self.projects:
+            ET.SubElement(root, 'HFSSModel', {'Name' : project.name})
+        Project.tree = ET.ElementTree(root)
+
+    @classmethod
+    def get_tree(cls):
+        Project.create_tree()
+        return Project.tree
+        
+    @classmethod
+    def parse(cls, projects, tree):
+        Project.projects = []
+        for model in root.iter("HFSSModel"):
+            Project.projects.append(ProjectElement(model))
             
+        
+    @classmethod
+    def get_name(cls):
+        if Project.filename is not None:
+            basename = os.path.basename(filename)
+            return os.path.splitext(basename)[0]
+    
 '''
 import xml.etree.ElementTree as ET
 
@@ -101,24 +126,4 @@ except IOError as e:
 # print(ET.tostring(root, encoding='utf-8').decode('utf-8'))
 
 '''
-    @classmethod
-    def create_tree(cls):
-        root = ET.Element('AnsoftProject')
-        for project in self.projects:
-            ET.SubElement(root, 'HFSSModel', {'Name' : project.name}
-
-    @classmethod
-    def get_tree(cls):
-        Project.create_tree()
-        return Project.tree
-        
-    @classmethod
-    def parse(cls, projects, tree):
-        pass
-        
-    @classmethod
-    def get_name(cls):
-        if Project.filename is not None:
-            basename = os.path.basename(filename)
-            return os.path.splitext(basename)[0]
 
