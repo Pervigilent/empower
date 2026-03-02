@@ -61,6 +61,7 @@ class Project:
     projects = []
     def __init__(self, tree=None, filename=None):
         if tree is not None:
+            Project.tree = tree
             Project.parse(tree)
         else:
             #Project.tree = None
@@ -83,9 +84,12 @@ class Project:
         
     @classmethod
     def parse(cls, projects, tree):
+        Project.tree = tree
+        root = tree.getroot()
         Project.projects = []
         for model in root.iter("HFSSModel"):
             Project.projects.append(ProjectElement(model))
+        projects = Project.projects
             
         
     @classmethod
